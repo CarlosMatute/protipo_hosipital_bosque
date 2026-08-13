@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // DOM Elements
   const loginWrapper = document.getElementById('login-wrapper');
   const appContainer = document.getElementById('app-container');
+  const appSidebar = document.getElementById('app-sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  const btnHamburger = document.getElementById('btn-hamburger');
+  const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+  const btnMobileLogout = document.getElementById('btn-mobile-logout');
   const loginForm = document.getElementById('login-form');
   const navItems = document.querySelectorAll('.nav-item');
   const viewSections = document.querySelectorAll('.view-section');
@@ -33,13 +38,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectPatientRecord = document.getElementById('record-patient-select');
 
   // ==========================================
+  // MOBILE DRAWER CONTROLS
+  // ==========================================
+  function openMobileSidebar() {
+    if (appSidebar) appSidebar.classList.add('open');
+    if (sidebarOverlay) sidebarOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileSidebar() {
+    if (appSidebar) appSidebar.classList.remove('open');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (btnHamburger) {
+    btnHamburger.addEventListener('click', openMobileSidebar);
+  }
+
+  if (btnCloseSidebar) {
+    btnCloseSidebar.addEventListener('click', closeMobileSidebar);
+  }
+
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', closeMobileSidebar);
+  }
+
+  // ==========================================
   // VIEW NAVIGATION & ROUTING
   // ==========================================
   function navigateTo(viewId) {
+    closeMobileSidebar();
+
     if (viewId === 'login-view') {
       loginWrapper.style.display = 'flex';
       appContainer.style.display = 'none';
       currentView = 'login-view';
+      window.scrollTo(0, 0);
       return;
     }
 
@@ -57,6 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
       targetSection.style.display = 'block';
       currentView = viewId;
     }
+
+    // Scroll to top of main content on navigation
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) mainContent.scrollTop = 0;
+    window.scrollTo(0, 0);
 
     // Update active nav item
     navItems.forEach(item => {
@@ -100,12 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Logout Button
+  // Logout Buttons (Desktop + Mobile)
+  function handleLogout() {
+    navigateTo('login-view');
+    showToast('Sesión finalizada correctamente.', 'info');
+  }
+
   if (btnLogout) {
-    btnLogout.addEventListener('click', () => {
-      navigateTo('login-view');
-      showToast('Sesión finalizada correctamente.', 'info');
-    });
+    btnLogout.addEventListener('click', handleLogout);
+  }
+
+  if (btnMobileLogout) {
+    btnMobileLogout.addEventListener('click', handleLogout);
   }
 
   // Brand Logo Click in Sidebar -> Go to Dashboard
