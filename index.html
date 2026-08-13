@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital del Bosque - Sistema Integral Hospitalario</title>
+  <meta name="description" content="Plataforma de gestión clínica y administrativa del Hospital del Bosque.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. AUTHENTICATION / LOGIN VIEW
+       ========================================================================= -->
+  <div id="login-wrapper" class="login-wrapper">
+    <div class="login-card">
+      <div class="login-top-stripe"></div>
+      
+      <div class="login-content">
+        <!-- Logo -->
+        <div class="login-logo">
+          <img src="assets/logo.svg" alt="Hospital del Bosque" width="240" height="60">
+        </div>
+
+        <div class="login-header">
+          <h1 class="login-title">Sistema Hospital del Bosque</h1>
+          <p class="login-subtitle">Acceso restringido para personal autorizado</p>
+        </div>
+
+        <form id="login-form" class="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-username">Usuario / ID Empleado</label>
+            <div class="input-with-icon">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <input type="text" id="login-username" class="form-control" placeholder="ej. EMP-001" value="EMP-001" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Contraseña</label>
+            <div class="input-with-icon">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="hospital2026" required>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-login-submit" class="btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+              <polyline points="10 17 15 12 10 7"/>
+              <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Iniciar Sesión
+          </button>
+        </form>
+
+        <div class="login-footer">
+          © 2026 Hospital del Bosque.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. MAIN APP CONTAINER (SIDEBAR + MAIN CONTENT)
+       ========================================================================= -->
+  <div id="app-container" class="app-container" style="display: none;">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <!-- Logo -->
+        <div class="sidebar-brand" title="Ir al Dashboard">
+          <img src="assets/logo.svg" alt="Hospital del Bosque" width="220" height="52">
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="sidebar-nav">
+          <!-- Item: Dashboard -->
+          <div class="nav-section">
+            <a href="#dashboard" class="nav-item active" data-view="dashboard-view" id="nav-dashboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="9"/>
+                <rect x="14" y="3" width="7" height="5"/>
+                <rect x="14" y="12" width="7" height="9"/>
+                <rect x="3" y="16" width="7" height="5"/>
+              </svg>
+              <span>Dashboard Principal</span>
+            </a>
+          </div>
+
+          <!-- Section: GESTIÓN MÉDICA -->
+          <div class="nav-section">
+            <div class="nav-section-title">GESTIÓN MÉDICA</div>
+            <a href="#pacientes" class="nav-item" data-view="pacientes-view" id="nav-pacientes">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Pacientes</span>
+            </a>
+
+            <a href="#medicos" class="nav-item" data-view="medicos-view" id="nav-medicos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <line x1="19" y1="8" x2="19" y2="14"/>
+                <line x1="22" y1="11" x2="16" y2="11"/>
+              </svg>
+              <span>Médicos</span>
+            </a>
+
+            <a href="#expedientes" class="nav-item" data-view="expedientes-view" id="nav-expedientes">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <span>Expedientes Clínicos</span>
+            </a>
+          </div>
+
+          <!-- Section: SERVICIOS -->
+          <div class="nav-section">
+            <div class="nav-section-title">SERVICIOS</div>
+            <a href="#farmacia" class="nav-item" data-view="farmacia-view" id="nav-farmacia">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"/>
+                <circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              <span>Farmacia (POS)</span>
+            </a>
+
+            <a href="#laboratorio" class="nav-item" data-view="laboratorio-view" id="nav-laboratorio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2v7.31L4.2 18.27A2 2 0 0 0 5.86 21h12.28a2 2 0 0 0 1.66-2.73L14 9.31V2"/>
+                <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+                <line x1="7.5" y1="14" x2="16.5" y2="14"/>
+              </svg>
+              <span>Laboratorio</span>
+            </a>
+          </div>
+
+          <!-- Section: ADMINISTRACIÓN -->
+          <div class="nav-section">
+            <div class="nav-section-title">ADMINISTRACIÓN</div>
+            <a href="#rrhh" class="nav-item" data-view="rrhh-view" id="nav-rrhh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>RRHH y Planillas</span>
+            </a>
+
+            <a href="#roles" class="nav-item" data-view="roles-view" id="nav-roles">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>Roles y Accesos</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom / Logout -->
+      <div class="sidebar-footer">
+        <button id="btn-logout" class="btn-logout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Cerrar Sesión
+        </button>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         3. MAIN CONTENT VIEWS
+         ======================================================================= -->
+    <main class="main-content">
+      
+      <!-- -------------------------------------------------------------------
+           VIEW A: DASHBOARD PRINCIPAL
+           ------------------------------------------------------------------- -->
+      <section id="dashboard-view" class="view-section">
+        <div class="page-header">
+          <h2 class="page-title">Resumen del Día</h2>
+        </div>
+
+        <!-- 4 Stat Cards -->
+        <div class="stats-grid">
+          <!-- Card 1: Pacientes Atendidos (Blue) -->
+          <div class="stat-card blue">
+            <div class="stat-info">
+              <span class="stat-label">Pacientes Atendidos</span>
+              <span class="stat-value">42</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 2: Citas Pendientes (Gold) -->
+          <div class="stat-card gold">
+            <div class="stat-info">
+              <span class="stat-label">Citas Pendientes</span>
+              <span class="stat-value">15</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 3: Recetas Emitidas (Green) -->
+          <div class="stat-card green">
+            <div class="stat-info">
+              <span class="stat-label">Recetas Emitidas</span>
+              <span class="stat-value">89</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 4: Ventas Farmacia (Orange) -->
+          <div class="stat-card orange">
+            <div class="stat-info">
+              <span class="stat-label">Ventas Farmacia</span>
+              <span class="stat-value">L. 45,200</span>
+            </div>
+            <div class="stat-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Card -->
+        <div class="activity-card">
+          <h3 class="activity-title">Actividad Reciente</h3>
+          <ul class="activity-list">
+            <li class="activity-item">
+              <span class="activity-dot blue"></span>
+              <span class="activity-time">Hace 5 min</span>
+              <span class="activity-desc">Nuevo expediente de <strong>Pediatría</strong> creado por <strong>Dra. Martínez</strong>.</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot green"></span>
+              <span class="activity-time">Hace 12 min</span>
+              <span class="activity-desc">Venta procesada en <strong>Farmacia</strong> (Ticket #00452).</span>
+            </li>
+            <li class="activity-item">
+              <span class="activity-dot gold"></span>
+              <span class="activity-time">Hace 25 min</span>
+              <span class="activity-desc">Resultados de <strong>Laboratorio</strong> listos para <strong>Juan Pérez</strong>.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW B: PACIENTES (Registro de Pacientes)
+           ------------------------------------------------------------------- -->
+      <section id="pacientes-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Registro de Pacientes</h2>
+          <div class="page-actions">
+            <button id="btn-open-patient-modal" class="btn-action-primary">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              + Nuevo Paciente
+            </button>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>ID / IDENTIDAD</th>
+                <th>NOMBRE COMPLETO</th>
+                <th>EDAD</th>
+                <th>GÉNERO</th>
+                <th>TELÉFONO</th>
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="pacientes-table-body">
+              <!-- Rendered via JavaScript from HOSPITAL_DATA.pacientes -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW C: EXPEDIENTES CLÍNICOS (Módulo de Expedientes Clínicos)
+           ------------------------------------------------------------------- -->
+      <section id="expedientes-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Módulo de Expedientes Clínicos</h2>
+        </div>
+
+        <div class="records-grid">
+          <!-- Left Column: Form Card -->
+          <div class="form-card">
+            <h3 class="card-heading">Nueva Consulta / Expediente</h3>
+            
+            <form id="form-new-record">
+              <div class="two-col-form">
+                <div class="form-group">
+                  <label class="form-label" for="record-patient-select">Paciente</label>
+                  <select id="record-patient-select" class="form-control" required>
+                    <option value="">Seleccione un paciente...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="record-specialty-select">Especialidad</label>
+                  <select id="record-specialty-select" class="form-control" required>
+                    <option value="">Seleccione especialidad...</option>
+                    <option value="Medicina General">Medicina General</option>
+                    <option value="Pediatría">Pediatría</option>
+                    <option value="Ginecología">Ginecología</option>
+                    <option value="Cardiología">Cardiología</option>
+                    <option value="Cirugía General">Cirugía General</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="full-col-form">
+                <div class="form-group">
+                  <label class="form-label" for="record-sintomas">Motivo de Consulta / Síntomas</label>
+                  <textarea id="record-sintomas" class="form-control" placeholder="" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="record-diagnostico">Diagnóstico</label>
+                  <input type="text" id="record-diagnostico" class="form-control" placeholder="">
+                </div>
+              </div>
+
+              <!-- Receta Médica Box -->
+              <div class="prescription-box">
+                <div class="prescription-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  </svg>
+                  Receta Médica
+                </div>
+
+                <div id="medications-container">
+                  <div class="medication-row">
+                    <div class="medication-top-cols">
+                      <div class="form-group">
+                        <label class="form-label">Medicamento</label>
+                        <input type="text" class="form-control" placeholder="Ej. Amoxicilina 500mg">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Cantidad</label>
+                        <input type="text" class="form-control" placeholder="Ej. 1">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Dosis y Frecuencia (Indicaciones)</label>
+                      <input type="text" class="form-control" placeholder="Ej. Tomar 1 tableta cada 8 horas por 7 días">
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button" id="btn-add-medication" class="btn-add-med">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="16"/>
+                    <line x1="8" y1="12" x2="16" y2="12"/>
+                  </svg>
+                  + Agregar otro medicamento
+                </button>
+              </div>
+
+              <div class="form-actions-right">
+                <button type="submit" class="btn-primary" style="width: auto; padding: 12px 28px;">
+                  Guardar Expediente y Receta
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Column: Recent Records Card -->
+          <div class="history-card">
+            <h3 class="card-heading">Últimos Expedientes</h3>
+            <div id="expedientes-recientes-list" class="expedientes-list">
+              <!-- Rendered via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW D: MÉDICOS
+           ------------------------------------------------------------------- -->
+      <section id="medicos-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Directorio de Médicos Especialistas</h2>
+        </div>
+        <div id="medicos-grid" class="doctors-grid">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW E: FARMACIA (POS)
+           ------------------------------------------------------------------- -->
+      <section id="farmacia-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Módulo de Farmacia y Punto de Venta (POS)</h2>
+        </div>
+
+        <div class="pos-layout">
+          <!-- Left: Catalog -->
+          <div class="table-card" style="padding: 24px;">
+            <h3 style="font-size: 15px; font-weight: 700; color: #1e293b;">Catálogo de Medicamentos Disponibles</h3>
+            <div id="pos-products-grid" class="pos-products-grid">
+              <!-- Rendered via JavaScript -->
+            </div>
+          </div>
+
+          <!-- Right: POS Ticket -->
+          <div class="pos-ticket-card">
+            <div class="pos-ticket-header">
+              <span style="font-weight: 700; font-size: 15px; color: #1e293b;">Ticket de Venta #00453</span>
+              <span class="badge badge-success">Caja 01</span>
+            </div>
+
+            <div id="pos-cart-items" class="pos-cart-list">
+              <!-- Rendered via JavaScript -->
+            </div>
+
+            <div class="pos-totals">
+              <div class="pos-total-row">
+                <span>Subtotal:</span>
+                <span id="pos-subtotal">L. 0.00</span>
+              </div>
+              <div class="pos-total-row">
+                <span>ISV (15%):</span>
+                <span id="pos-isv">L. 0.00</span>
+              </div>
+              <div class="pos-total-row grand-total">
+                <span>Total a Pagar:</span>
+                <span id="pos-total">L. 0.00</span>
+              </div>
+            </div>
+
+            <button type="button" id="btn-process-sale" class="btn-primary" style="margin-top: 8px;">
+              Procesar Cobro e Imprimir Factura
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW F: LABORATORIO
+           ------------------------------------------------------------------- -->
+      <section id="laboratorio-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Control de Órdenes de Laboratorio Clínico</h2>
+        </div>
+        <div class="table-card">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>CÓDIGO</th>
+                <th>EXAMEN CLÍNICO</th>
+                <th>PACIENTE</th>
+                <th>MÉDICO SOLICITANTE</th>
+                <th>FECHA Y HORA</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody id="laboratorio-table-body">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW G: RRHH Y PLANILLAS
+           ------------------------------------------------------------------- -->
+      <section id="rrhh-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Personal Hospitalario y Planillas</h2>
+        </div>
+        <div class="table-card">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>ID EMPLEADO</th>
+                <th>NOMBRE COMPLETO</th>
+                <th>CARGO / PUESTO</th>
+                <th>DEPARTAMENTO</th>
+                <th>SALARIO MENSUAL</th>
+                <th>ESTADO</th>
+              </tr>
+            </thead>
+            <tbody id="rrhh-table-body">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- -------------------------------------------------------------------
+           VIEW H: ROLES Y ACCESOS
+           ------------------------------------------------------------------- -->
+      <section id="roles-view" class="view-section" style="display: none;">
+        <div class="page-header">
+          <h2 class="page-title">Gestión de Roles y Permisos</h2>
+        </div>
+        <div class="table-card">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>ROL DEL SISTEMA</th>
+                <th>USUARIOS ACTIVOS</th>
+                <th>DESCRIPCIÓN DE PERMISOS</th>
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+            <tbody id="roles-table-body">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       4. MODALS
+       ========================================================================= -->
+  <!-- Modal: Nuevo Paciente -->
+  <div id="modal-patient" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Registrar Nuevo Paciente</h3>
+        <button class="modal-close">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <form id="form-new-patient">
+        <div class="modal-body">
+          <div class="two-col-form">
+            <div class="form-group">
+              <label class="form-label" for="new-patient-id">N° Identidad / DNI</label>
+              <input type="text" id="new-patient-id" class="form-control" placeholder="0801-1995-12345" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="new-patient-nombre">Nombre Completo</label>
+              <input type="text" id="new-patient-nombre" class="form-control" placeholder="Ej. Roberto Sánchez" required>
+            </div>
+          </div>
+
+          <div class="two-col-form">
+            <div class="form-group">
+              <label class="form-label" for="new-patient-edad">Edad (Años)</label>
+              <input type="number" id="new-patient-edad" class="form-control" placeholder="32" min="0" max="120" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="new-patient-genero">Género</label>
+              <select id="new-patient-genero" class="form-control" required>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-patient-telefono">Teléfono de Contacto</label>
+            <input type="text" id="new-patient-telefono" class="form-control" placeholder="9876-5432" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary btn-close-modal">Cancelar</button>
+          <button type="submit" class="btn-action-primary">Guardar Paciente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Ver Detalle Expediente -->
+  <div id="modal-record-detail" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="patient-detail-title" class="modal-title">Expediente Clínico</h3>
+        <button class="modal-close">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="patient-detail-content">
+          <!-- Dynamic Content -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary btn-close-modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       5. TOAST NOTIFICATIONS CONTAINER
+       ========================================================================= -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
